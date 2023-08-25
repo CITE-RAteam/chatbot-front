@@ -1,9 +1,20 @@
 import ClientChat from "./ClientChat";
 
-export default function ChatBox() {
+interface Props {
+  userChat: string;
+  handleUserChatChange: (chat: string) => void;
+}
+
+interface ChatValue {
+    client: {chat: string, button: string[]|undefined};
+    user: string;
+}
+
+export default function ChatBox({ userChat, handleUserChatChange }: Props) {
   return (
     <div className="overflow-scroll min-h-BWHeaderFooter">
-      <ClientChat />
+      <ClientChat handleUserChatChange={handleUserChatChange} />
+      {userChat}
     </div>
   );
 }

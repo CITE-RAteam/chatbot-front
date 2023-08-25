@@ -1,6 +1,10 @@
 import ClientButton from "./ClientButton";
 
-export default function ClientChat() {
+interface Props {
+  handleUserChatChange: (chat: string) => void;
+}
+
+export default function ClientChat({ handleUserChatChange }: Props) {
   const text: string =
     "こんにちは！よく寄せられる質問についてお答えいたします。\n\n下記の内容がよく質問されています。質問をクリックすると回答が表示されます。こちらを参考に質問してみてください。";
   const button_text: string[] = [
@@ -14,7 +18,10 @@ export default function ClientChat() {
       {text}
       <div className="flex-col">
         {button_text.map((text) => (
-          <ClientButton text={text} />
+          <ClientButton
+            text={text}
+            handleUserChatChange={handleUserChatChange}
+          />
         ))}
       </div>
     </div>
