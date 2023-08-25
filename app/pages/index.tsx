@@ -1,4 +1,4 @@
-import ClientChat from "@/features/components/ClientChat";
+import ChatBox from "@/features/components/ChatBox";
 import Footer from "@/features/components/Footer";
 import Header from "@/features/components/Header";
 
@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <ClientChat />
+      <ChatBox />
       <Footer />
     </div>
   );
