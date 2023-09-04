@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/node": "20.5.4",
-    "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
     "eslint": "8.47.0",
@@ -22,9 +20,11 @@
     "tailwindcss": "3.3.3"
   },
   "devDependencies": {
+    "@types/node": "20.5.9",
+    "@types/react": "18.2.21",
     "eslint-plugin-tailwindcss": "^3.13.0",
     "prettier": "^3.0.2",
     "prettier-plugin-tailwindcss": "^0.5.3",
-    "typescript": "^5.1.6"
+    "typescript": "5.2.2"
   }
 }
