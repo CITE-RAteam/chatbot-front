@@ -8,7 +8,8 @@ interface Props {
 
 export default function ChatBox({ chatValue, handleUserChatChange }: Props) {
   return (
-    <div className="overflow-scroll min-h-BWHeaderFooter">
+  <div>
+    <div className="overflow-scroll min-h-BWHeaderFooter mt-12 mb-20">
       {chatValue.map((chatValue, index) => (
         <div>
           <ClientChat
@@ -26,6 +27,7 @@ export default function ChatBox({ chatValue, handleUserChatChange }: Props) {
           )}
         </div>
       ))}
+    </div>
     </div>
   );
 }
