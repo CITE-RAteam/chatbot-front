@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import ClientChat from "./ClientChat";
 import UserChat from "./UserChat";
 
@@ -7,16 +8,22 @@ interface Props {
 }
 
 export default function ChatBox({ chatValue, handleUserChatChange }: Props) {
+
+  const scrollBottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    scrollBottomRef?.current?.scrollIntoView();
+  },[chatValue])
+
   return (
   <div>
     <div className="overflow-scroll min-h-BWHeaderFooter mt-12 mb-20">
       {chatValue.map((chatValue, index) => (
-        <div>
+        <div key={index}>
           <ClientChat
             chat={chatValue.client.chat}
             button={chatValue.client.button ?? []}
             handleUserChatChange={handleUserChatChange}
-            key={index}
           />
           {chatValue.user ? (
             <UserChat
@@ -27,6 +34,7 @@ export default function ChatBox({ chatValue, handleUserChatChange }: Props) {
           )}
         </div>
       ))}
+      <div ref={scrollBottomRef}></div>
     </div>
     </div>
   );
