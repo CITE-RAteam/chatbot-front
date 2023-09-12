@@ -1,33 +1,67 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 interface Props {
   handleUserChatChange: (chat: string) => void;
+  questionError: boolean;
+  setQuestionErrorFlag: (flag: boolean) => void
 }
 
-export default function Footer({ handleUserChatChange }: Props) {
-  const ref = useRef<HTMLInputElement>(null)
+export default function Footer({ handleUserChatChange, questionError, setQuestionErrorFlag }: Props) {
+  const inputRef = useRef<HTMLInputElement>(null);
   const handleClick = (e: any) => {
-    console.log(ref.current?.value);
-    handleUserChatChange(ref.current?.value ?? "");
+    if (inputRef.current?.value == "") {
+      setQuestionErrorFlag(true)
+    } else {
+      setQuestionErrorFlag(false)
+      handleUserChatChange(inputRef.current?.value ?? "");
+    }
   };
 
   return (
-    <footer className="bg-gray-200 h-20 fixed bottom-0 w-screen flex">
-      <input
-        type="text"
-        id="question"
-        name="question"
-        placeholder="質問を入力してください"
-        className="flex-5 my-auto h-10"
-        ref={ref}
-      ></input>
-      <button
-        type="submit"
-        onClick={handleClick}
-        className="bg-red-500 my-auto h-10 flex-1 rounded"
+    <footer className="bg-gray-200 h-20 fixed bottom-0 w-screen">
+      {questionError ?
+      <div
+        className={[
+          "whitespace-nowrap",
+          "rounded",
+          "bg-black",
+          "px-2",
+          "py-1",
+          "text-white",
+          "absolute",
+          "-top-6",
+          "left-1/2",
+          "-translate-x-1/2",
+          "before:content-['']",
+          "before:absolute",
+          "before:-translate-x-1/2",
+          "before:left-1/2",
+          "before:top-full",
+          "before:border-4",
+          "before:border-transparent",
+          "before:border-t-black",
+        ].join(" ")}
       >
-        検索
-      </button>
+        質問は1文字以上入力してください
+      </div>
+      :<div></div>}
+      <div className="my-5 flex h-10">
+        <input
+          type="text"
+          id="question"
+          name="question"
+          placeholder="質問を入力してください"
+          className="flex-5"
+          ref={inputRef}
+        ></input>
+        <button
+          type="submit"
+          onClick={handleClick}
+          className="bg-red-500 flex-1 rounded"
+        >
+          検索
+        </button>
+      </div>
     </footer>
   );
 }

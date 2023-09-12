@@ -1,11 +1,16 @@
 interface props {
   text: string;
   handleUserChatChange: (chat: string) => void;
+  setQuestionErrorFlag: (flag: boolean) => void;
 }
 
-export default function ClientButton({ text, handleUserChatChange }: props) {
+export default function ClientButton({
+  text,
+  handleUserChatChange,
+  setQuestionErrorFlag,
+}: props) {
   const handleClick = (e: any) => {
-    console.log(e.target.innerText);
+    setQuestionErrorFlag(false);
     handleUserChatChange(e.target.innerText);
   };
   return (
