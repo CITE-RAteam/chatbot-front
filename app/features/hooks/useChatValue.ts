@@ -20,9 +20,27 @@ export const useChatValue = () => {
     chatValue[chatValue.length - 1].user = chat;
     setChatValue([...chatValue]);
     const url = "https://pokeapi.co/api/v2/pokemon/" + chat;
-    const response = await axios.get(url).then((res) => res.data);
+    axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        switch (error.response?.status) {
+          case 422:
+            return Promise.reject(error.response?.data);
+          case 404:
+            return Promise.reject(error.response?.data);
+          case 500:
+            return Promise.reject(error.response?.data);
+          default:
+            return Promise.reject(error.response?.data);
+        }
+      }
+    );
+    const response = await axios
+      .get(url)
+      .then((res) => res.data.name)
+      .catch((error) => error);
     chatValue.push({
-      client: { chat: response.name, button: undefined },
+      client: { chat: response, button: undefined },
       user: undefined,
     });
     setChatValue([...chatValue]);
