@@ -5,7 +5,7 @@ import { useChatValue } from "@/features/hooks/useChatValue";
 import { useQuestionError } from "@/features/hooks/useQuestionError";
 
 export default function Home() {
-  const { chatValue, setHandleUserChatChange } = useChatValue();
+  const { chatValue, isAPIWaiting, setHandleUserChatChange } = useChatValue();
   const { questionError, setQuestionErrorFlag } = useQuestionError();
 
   return (
@@ -15,6 +15,7 @@ export default function Home() {
         chatValue={chatValue}
         handleUserChatChange={setHandleUserChatChange}
         setQuestionErrorFlag={setQuestionErrorFlag}
+        isAPIWaiting={isAPIWaiting}
       />
       <Footer
         handleUserChatChange={setHandleUserChatChange}

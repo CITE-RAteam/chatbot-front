@@ -3,6 +3,7 @@ import axios from "axios";
 
 export const useChatValue = () => {
   const [chatValue, setChatValue] = useState<ChatValue[]>([]);
+  const [isAPIWaiting, setIsSPIWaiting] = useState<boolean>(false);
 
   useEffect(() => {
     setChatValue([
@@ -19,6 +20,7 @@ export const useChatValue = () => {
   async function setHandleUserChatChange(chat: string) {
     chatValue[chatValue.length - 1].user = chat;
     setChatValue([...chatValue]);
+    setIsSPIWaiting(true);
     const url = "https://pokeapi.co/api/v2/pokemon/" + chat;
     axios.interceptors.response.use(
       (response) => response,
@@ -43,8 +45,9 @@ export const useChatValue = () => {
       client: { chat: response, button: undefined },
       user: undefined,
     });
+    setIsSPIWaiting(false);
     setChatValue([...chatValue]);
   }
 
-  return { chatValue, setHandleUserChatChange };
+  return { chatValue, isAPIWaiting, setHandleUserChatChange };
 };

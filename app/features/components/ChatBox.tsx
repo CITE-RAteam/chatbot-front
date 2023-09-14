@@ -1,17 +1,20 @@
 import { useEffect, useRef } from "react";
 import ClientChat from "./ClientChat";
 import UserChat from "./UserChat";
+import ChatWaiting from "./ChatWaiting";
 
 interface Props {
   chatValue: ChatValue[];
   handleUserChatChange: (chat: string) => void;
   setQuestionErrorFlag: (flag: boolean) => void;
+  isAPIWaiting: boolean;
 }
 
 export default function ChatBox({
   chatValue,
   handleUserChatChange,
   setQuestionErrorFlag,
+  isAPIWaiting,
 }: Props) {
   const scrollBottomRef = useRef<HTMLDivElement>(null);
 
@@ -33,6 +36,12 @@ export default function ChatBox({
             {chatValue.user ? <UserChat chat={chatValue.user} /> : <></>}
           </div>
         ))}
+        {isAPIWaiting ? (
+          <ChatWaiting isAPIWaiting={isAPIWaiting} />
+        ) : (
+          <div></div>
+        )}
+
         <div ref={scrollBottomRef}></div>
       </div>
     </div>
