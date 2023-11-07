@@ -2,16 +2,20 @@ interface props {
   button: ButtonValue;
   handleUserChatChange: (chat: string, next_id: number) => void;
   setQuestionErrorFlag: (flag: boolean) => void;
+  isAPIWaiting: boolean;
 }
 
 export default function ClientButton({
   button,
   handleUserChatChange,
   setQuestionErrorFlag,
+  isAPIWaiting,
 }: props) {
   const handleClick = (e: any) => {
-    setQuestionErrorFlag(false);
-    handleUserChatChange(e.target.innerText, button.choice_id);
+    if (!isAPIWaiting) {
+      setQuestionErrorFlag(false);
+      handleUserChatChange(e.target.innerText, button.choice_id);
+    }
   };
   return (
     <>

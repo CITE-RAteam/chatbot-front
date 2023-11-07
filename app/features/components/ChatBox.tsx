@@ -32,6 +32,7 @@ export default function ChatBox({
               button={chatValue.client.button ?? []}
               handleUserChatChange={handleUserChatChange}
               setQuestionErrorFlag={setQuestionErrorFlag}
+              isAPIWaiting={isAPIWaiting}
             />
             {chatValue.user ? <UserChat chat={chatValue.user} /> : <></>}
           </div>
