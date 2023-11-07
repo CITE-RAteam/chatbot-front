@@ -5,7 +5,7 @@ import ChatWaiting from "./ChatWaiting";
 
 interface Props {
   chatValue: ChatValue[];
-  handleUserChatChange: (chat: string) => void;
+  handleUserChatChange: (chat: string, next_id: number) => void;
   setQuestionErrorFlag: (flag: boolean) => void;
   isAPIWaiting: boolean;
 }

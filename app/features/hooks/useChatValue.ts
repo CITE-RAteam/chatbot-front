@@ -10,39 +10,34 @@ export const useChatValue = () => {
       {
         client: {
           chat: "こんにちは！よく寄せられる質問についてお答えいたします。\n\n下記の内容がよく質問されています。質問をクリックすると回答が表示されます。こちらを参考に質問してみてください。",
-          button: ["講義情報", "学内情報", "学外情報", "学生間の交流場"],
+          button: [
+            { choice_id: 1000, choice_text: "講義情報" },
+            { choice_id: 2000, choice_text: "学内情報" },
+            { choice_id: 2001, choice_text: "学外情報" },
+            { choice_id: 2002, choice_text: "学生間の交流場" },
+          ],
         },
         user: undefined,
       },
     ]);
   }, []);
 
-  async function setHandleUserChatChange(chat: string) {
+  async function setHandleUserChatChange(chat: string, next_id: number) {
+    console.log("next_id:",next_id)
     chatValue[chatValue.length - 1].user = chat;
     setChatValue([...chatValue]);
     setIsSPIWaiting(true);
-    const url = "https://pokeapi.co/api/v2/pokemon/" + chat;
-    axios.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        switch (error.response?.status) {
-          case 422:
-            return Promise.reject(error.response?.data);
-          case 404:
-            return Promise.reject(error.response?.data);
-          case 500:
-            return Promise.reject(error.response?.data);
-          default:
-            return Promise.reject(error.response?.data);
-        }
-      }
-    );
+    const url = process.env.NEXT_PUBLIC_APIURL ?? "";
     const response = await axios
-      .get(url)
-      .then((res) => res.data.name)
+      .post(url, { question_id: next_id })
+      .then((res) => res)
       .catch((error) => error);
+    console.log(response.data.next_choices);
     chatValue.push({
-      client: { chat: response, button: undefined },
+      client: {
+        chat: response.data.free_response,
+        button: response.data.next_choices ? response.data.next_choices : undefined,
+      },
       user: undefined,
     });
     setIsSPIWaiting(false);

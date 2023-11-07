@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 
 interface Props {
-  handleUserChatChange: (chat: string) => void;
+  handleUserChatChange: (chat: string, next_id: number) => void;
   questionError: boolean;
   setQuestionErrorFlag: (flag: boolean) => void
 }
@@ -13,7 +13,7 @@ export default function Footer({ handleUserChatChange, questionError, setQuestio
       setQuestionErrorFlag(true)
     } else {
       setQuestionErrorFlag(false)
-      handleUserChatChange(inputRef.current?.value ?? "");
+      handleUserChatChange(inputRef.current?.value ?? "",9999);
     }
   };
 

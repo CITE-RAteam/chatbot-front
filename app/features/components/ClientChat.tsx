@@ -2,8 +2,8 @@ import ClientButton from "./ClientButton";
 
 interface Props {
   chat: string;
-  button: string[];
-  handleUserChatChange: (chat: string) => void;
+  button: ButtonValue[];
+  handleUserChatChange: (chat: string, next_id: number) => void;
   setQuestionErrorFlag: (flag: boolean) => void;
 }
 
@@ -17,9 +17,9 @@ export default function ClientChat({
     <div className="bg-gray-200 h-auto max-h-96 w-80 p-1 my-4 whitespace-pre-wrap overflow-scroll rounded">
       {chat}
       <div className="flex-col">
-        {button.map((text, index) => (
+        {button.map((button, index) => (
           <ClientButton
-            text={text}
+            button={button}
             handleUserChatChange={handleUserChatChange}
             key={index}
             setQuestionErrorFlag={setQuestionErrorFlag}
