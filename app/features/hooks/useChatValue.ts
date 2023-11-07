@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const useChatValue = () => {
   const [chatValue, setChatValue] = useState<ChatValue[]>([]);
-  const [isAPIWaiting, setIsSPIWaiting] = useState<boolean>(false);
+  const [isAPIWaiting, setIsAPIWaiting] = useState<boolean>(false);
 
   useEffect(() => {
     setChatValue([
@@ -26,21 +26,21 @@ export const useChatValue = () => {
     console.log("next_id:",next_id)
     chatValue[chatValue.length - 1].user = chat;
     setChatValue([...chatValue]);
-    setIsSPIWaiting(true);
+    setIsAPIWaiting(true);
     const url = process.env.NEXT_PUBLIC_APIURL ?? "";
     const response = await axios
       .post(url, { question_id: next_id })
       .then((res) => res)
       .catch((error) => error);
-    console.log(response.data.next_choices);
+    console.log(response.data?.next_choices);
     chatValue.push({
       client: {
-        chat: response.data.free_response,
-        button: response.data.next_choices ? response.data.next_choices : undefined,
+        chat: response.data?.free_response,
+        button: response.data?.next_choices ? response.data?.next_choices : undefined,
       },
       user: undefined,
     });
-    setIsSPIWaiting(false);
+    setIsAPIWaiting(false);
     setChatValue([...chatValue]);
   }
 
