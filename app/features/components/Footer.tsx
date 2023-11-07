@@ -8,15 +8,21 @@ interface Props {
 
 export default function Footer({ handleUserChatChange, questionError, setQuestionErrorFlag }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isComposing, setComposing] = useState(false);
   const handleClick = (e: any) => {
     if (inputRef.current?.value == "") {
       setQuestionErrorFlag(true)
     } else {
       setQuestionErrorFlag(false)
-      handleUserChatChange(inputRef.current?.value ?? "",9999);
+      handleUserChatChange(inputRef.current?.value ?? "",2000);
     }
   };
 
+  const onKeyDownHandler = (e: any) => {
+    if (e.key === 'Enter' && !isComposing) {
+      handleClick(e)
+    }
+  };
   return (
     <footer className="bg-gray-200 h-20 fixed bottom-0 w-screen">
       {questionError ?
@@ -53,6 +59,9 @@ export default function Footer({ handleUserChatChange, questionError, setQuestio
           placeholder="質問を入力してください"
           className="flex-5"
           ref={inputRef}
+          onKeyDown={onKeyDownHandler}
+          onCompositionStart={() => setComposing(true)}
+          onCompositionEnd={() => setComposing(false)}
         ></input>
         <button
           type="submit"
